@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Learn the fundamentals of [modern JavaScript](https://fireship.io/courses/js) programming and web development in this fun, fast-paced course.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",

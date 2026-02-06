@@ -1,5 +1,5 @@
 //imperative style solution
-function cumSum(arr) {
+export function cumSum(arr) {
   let acc = 0;
   for (const val of arr) {
     acc += val;
@@ -8,11 +8,11 @@ function cumSum(arr) {
 }
 
 //declarative style solution
-function cumSum2(arr) {
+export function cumSum2(arr) {
   return arr.reduce((acc, val) => acc + val, 0);
 }
 
-function cumSum3(arr) {
+export function cumSum3(arr) {
   let acc = 0;
   arr.forEach((v) => {
     acc += v;
@@ -31,4 +31,4 @@ function main() {
   console.log(rslt);
 }
 
-main();
+//main();

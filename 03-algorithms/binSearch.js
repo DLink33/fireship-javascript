@@ -4,7 +4,7 @@ Return the index of the target value in the array.
 If the target value is not in the array, return -1.
 */
 
-function binSearch(arr, val) {
+export function binSearch(arr, val) {
   if (arr === undefined || arr === null) return -1;
   const n = arr.length;
   if (n === 0) return -1;
@@ -31,4 +31,4 @@ function main() {
   console.log(rslt);
 }
 
-main();
+//main();

@@ -7,15 +7,17 @@ getItem Return the value of the key. Update cache with the most recently used ke
 putItem Create or update a key value pair in the cache. Evict the least recently used key if the size of keys exceeds the max capacity.
 */
 
-function LRU(cap) {
+export function LRU(cap) {
   this.capacity = cap;
   this.cache = new Map(); // key -> value, insertion order = recency
 }
 
 LRU.prototype.getItem = function (key) {
   if (!this.cache.has(key)) return null;
-  const val = this.cache.get(key); // delete
-  this.cache.set(key, val); // and reset to front
+
+  const val = this.cache.get(key);
+  this.cache.delete(key);
+  this.cache.set(key, val);
   return val;
 };
 
@@ -47,4 +49,4 @@ function main() {
   console.log(cache.cache);
 }
 
-main();
+//main();
