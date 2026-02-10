@@ -94,5 +94,9 @@ console.log(b);
 b = a.findIndex((v, i) => v === 10);
 console.log(b);
 
-rslt = a.reduce((acc, v) => (acc += v), 1000);
+let rslt = a.reduce((acc, v) => (acc += v), 1000);
 console.log(rslt);
+
+
+const random = a[Math.floor(Math.random() * a.length)];
+console.log(random);
