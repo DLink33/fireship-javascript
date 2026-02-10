@@ -1,4 +1,6 @@
-POST http://localhost:8080/dream
+@endpoint = http://localhost:8080/dream/
+
+POST {{endpoint}}
 Content-Type: application/json
 
 {

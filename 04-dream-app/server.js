@@ -4,10 +4,15 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
+import path from "path";
+import fs from "fs";
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+const MOCK_MODE = process.env.MOCK_MODE === "1";
+console.debug(MOCK_MODE);
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY ?? process.env.OPENAI,
@@ -16,25 +21,42 @@ const client = new OpenAI({
 server.post("/dream", async (req, res) => {
   try {
     const prompt = req.body?.prompt;
-    if (!prompt) return res.status(400).json({ error: "Missing prompt" });
+    if (typeof prompt !== "string" || prompt.trim() === "") {
+      return res.status(400).json({ error: "Missing prompt" });
+    }
 
-    const img = await client.images.generate({
-      model: "gpt-image-1.5", // or "gpt-image-1-mini"
-      prompt,
-      n: 1,
-      size: "1024x1024",
-      output_format: "png", // optional (defaults to png)
-      quality: "high", // optional (auto/high/medium/low)
+    let b64;
+    let mime_type = "image/png";
+
+    if (MOCK_MODE) {
+      // return cute image of Rho
+      const imgPath = path.resolve("./assets/imgs/rho.jpg");
+      b64 = fs.readFileSync(imgPath).toString("base64");
+      mime_type = "image/jpg";
+    } else {
+      // perform the API request
+      const img = await client.images.generate({
+        model: "gpt-image-1",
+        prompt,
+        size: "1024x1024",
+        output_format: "png",
+        // quality: "high",
+      });
+
+      b64 = img.data?.[0]?.b64_json;
+      mime_type = "image/png";
+    }
+
+    if (!b64) return res.status(502).json({ error: "No image returned" });
+
+    return res.json({
+      image: `data:${mime_type};base64,${b64}`,
+      mocked: MOCK_MODE,
+      promptEcho: prompt,
     });
-
-    const b64 = img.data?.[0]?.b64_json;
-    if (!b64) return res.status(500).json({ error: "No image returned" });
-
-    // Send a browser-friendly data URL
-    res.json({ image: `data:image/png;base64,${b64}` });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Imagevkgfk generation failed" });
+    return res.status(500).json({ error: "Image generation failed" });
   }
 });
 
