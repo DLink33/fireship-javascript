@@ -9,7 +9,6 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-// Prefer OPENAI_API_KEY, but keep your OPENAI var if that's what you set
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY ?? process.env.OPENAI,
 });
@@ -35,7 +34,7 @@ server.post("/dream", async (req, res) => {
     res.json({ image: `data:image/png;base64,${b64}` });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Image generation failed" });
+    res.status(500).json({ error: "Imagevkgfk generation failed" });
   }
 });
 

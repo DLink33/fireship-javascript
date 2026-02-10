@@ -1,0 +1,9 @@
+POST http://localhost:8080/dream
+Content-Type: application/json
+
+{
+    "prompt": "Make me a pizza."
+}
+
+###
+
