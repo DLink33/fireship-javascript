@@ -20,6 +20,9 @@ const client = new OpenAI({
 
 server.post("/dream", async (req, res) => {
   try {
+    console.debug("content-type: ", req.headers["content-type"]);
+    console.debug("raw body: ", req.body);
+
     const prompt = req.body?.prompt;
     if (typeof prompt !== "string" || prompt.trim() === "") {
       return res.status(400).json({ error: "Missing prompt" });

@@ -7,7 +7,22 @@
     <title>04-dream-app</title>
   </head>
   <body>
-    <div id="app"></div>
+    
+    <main>
+      <h1>Photo Generator</h1>
+
+      <div id="rslt">
+        Image will appear here
+      </div>
+
+      <form>
+        <label for="prompt">Prompt</label>
+        <textarea name="prompt" maxlength="160"></textarea>
+        <button type="submit">Dream it!</button>
+      </form>
+
+    </main>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
