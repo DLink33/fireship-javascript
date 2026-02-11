@@ -29,7 +29,7 @@ server.post("/dream", async (req, res) => {
     }
 
     let b64;
-    let mime_type = "image/png";
+    let mime_type;
 
     if (MOCK_MODE) {
       // return cute image of Rho
