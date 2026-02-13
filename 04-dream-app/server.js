@@ -18,6 +18,8 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY ?? process.env.OPENAI,
 });
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 server.post("/dream", async (req, res) => {
   try {
     console.debug("content-type: ", req.headers["content-type"]);
@@ -33,6 +35,8 @@ server.post("/dream", async (req, res) => {
 
     if (MOCK_MODE) {
       // return cute image of Rho
+      const ms = 600 + Math.floor(Math.random() * 800);
+      await sleep(ms);
       const imgPath = path.resolve("./assets/imgs/rho.jpg");
       b64 = fs.readFileSync(imgPath).toString("base64");
       mime_type = "image/jpg";

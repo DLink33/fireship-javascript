@@ -1,9 +1,11 @@
 import './style.css'
 
 const form = document.querySelector('form');
+const button = document.querySelector('button');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  showSpinner();
   const data = new FormData(form);
 
   console.debug(data);
@@ -21,4 +23,15 @@ form.addEventListener('submit', async (e) => {
   const {image} = await response.json();
   const rslt = document.querySelector('#rslt');
   rslt.innerHTML = `<img src="${image}" width="512" />`;
+  hideSpinner();
 });
+
+function showSpinner() {
+  button.disabled = true;
+  button.innerHTML = 'Dreaming...<span class="spinner">🧠</span>';
+}
+
+function hideSpinner() {
+  button.disabled = false;
+  button.innerHTML = "Dream it";
+}
