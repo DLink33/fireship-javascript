@@ -63,7 +63,9 @@ server.post("/dream", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Image generation failed" });
+    return res
+      .status(500)
+      .send(err?.response.data.error.message || "Image generation failed...");
   }
 });
 

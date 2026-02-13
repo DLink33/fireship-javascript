@@ -1,28 +1,34 @@
-import './style.css'
+import "./style.css";
 
-const form = document.querySelector('form');
-const button = document.querySelector('button');
+const form = document.querySelector("form");
+const button = document.querySelector("button");
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
   showSpinner();
   const data = new FormData(form);
 
   console.debug(data);
 
-  const response = await fetch('http://localhost:8080/dream', {
-    method: 'POST',
+  const response = await fetch("http://localhost:8080/dream", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      prompt: String(data.get('prompt') ?? ''),
+      prompt: String(data.get("prompt") ?? ""),
     }),
   });
 
-  const {image} = await response.json();
-  const rslt = document.querySelector('#rslt');
-  rslt.innerHTML = `<img src="${image}" width="512" />`;
+  if (response.ok) {
+    const { image } = await response.json();
+    const rslt = document.querySelector("#rslt");
+    rslt.innerHTML = `<img src="${image}" width="512" />`;
+  } else {
+    const err = await response.text();
+    alert(err);
+    console.error(err);
+  }
   hideSpinner();
 });
 
